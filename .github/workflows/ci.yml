@@ -19,7 +19,7 @@ jobs:
       - name: Create Tfvars
         run: |
           cat << EOF > terraform.tfvars
-          github_token = "${{ secrets.GITHUB_TOKEN }}"
+          github_token = "${{ secrets.github_token }}"
           EOF
 
       - name: Install Terraform
