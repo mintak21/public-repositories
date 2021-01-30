@@ -22,9 +22,6 @@ jobs:
           github_token = "${{ github.token }}"
           EOF
 
-      - name: Test
-        run: cat terraform.tfvars
-
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v1
         with:
@@ -34,6 +31,7 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-      # - name: Terraform Apply
-      #   id: apply
-      #   run: terraform apply -auto-approve
+
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve
