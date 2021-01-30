@@ -1,7 +1,7 @@
 name: Lint and Plan
 
 on:
-  push:
+  pull_request:
 
 env:
   TERRAFORM_VERSION: 0.14.5
@@ -44,9 +44,9 @@ jobs:
         id: plan
         run: terraform plan
 
-      - name: Terraform Lint
-        id: tflint
-        uses: devops-infra/action-tflint@master
+      - name: TfLint
+        uses: reviewdog/action-tflint@v1
         with:
-          run_init: false
-          fail_on_changes: true
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          filter_mode: file
