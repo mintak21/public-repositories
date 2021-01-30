@@ -19,14 +19,14 @@ jobs:
       - name: Create Tfvars
         run: |
           cat << EOF > terraform.tfvars
-          github_token = "${{ secrets.github_token }}"
+          github_token = "${{ secrets.TOKEN_FOR_GITHUB }}"
           EOF
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: ${{ env.TERRAFORM_VERSION }}
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          cli_config_credentials_token: ${{ secrets.TOKEN_FOR_TFCLOUD }}
 
       - name: Terraform Init
         id: init
