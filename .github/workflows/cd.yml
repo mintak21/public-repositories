@@ -1,0 +1,39 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+env:
+  TERRAFORM_VERSION: 0.14.5
+
+jobs:
+  apply:
+    name: Apply
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        id: checkout
+        uses: actions/checkout@v2
+
+      - name: Create Tfvars
+        run: |
+          cat << EOF > terraform.tfvars
+          github_token = "${{ github.token }}"
+          EOF
+
+      - name: Test
+        run: cat terraform.tfvars
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ env.TERRAFORM_VERSION }}
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+      # - name: Terraform Apply
+      #   id: apply
+      #   run: terraform apply -auto-approve
